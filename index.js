@@ -21,7 +21,7 @@ const AllCategory = (Datas) => {
         <a onclick="categoryClick('${data.category_id}')" class="nav-link " href="#">${data.category_name}</a>
         `
         categories.appendChild(li)
-        console.log(data.category_name, data.category_id);
+
     }
 }
 
@@ -29,7 +29,6 @@ categories();
 
 const categoryClick = async (data) => {
     const url = `https://openapi.programming-hero.com/api/news/category/${data}`
-    console.log(url);
     try {
         const res = await fetch(url)
         const data = await res.json()
@@ -44,8 +43,7 @@ const creatNews = (dataArray) => {
     const newsContainer = document.getElementById('news-container')
     newsContainer.innerHTML = ``
     dataArray.forEach(data => {
-        console.log(data);
-        const { author, image_url, title, details, total_view } = data;
+        const { _id, author, image_url, title, details, total_view } = data;
         const { img, name, published_date } = author;
         const div = document.createElement('div')
         div.innerHTML = `
@@ -57,11 +55,14 @@ const creatNews = (dataArray) => {
             <div class="col-md-9 p-3">
                 <div class="card-body align-middle">
                     <h5 class="card-title">${title}</h5>
-                    <p class="card-text">${details}</p>
+                    <p class="card-text">${details.length > 200 ? details.slice(0, 200) + '...' : details}</p>
                     <div class="d-flex justify-content-between">
-                        <span class="card-text"><small class="text-muted">${name}</small></span>
+                        <span class="card-text"><small class="text-muted">${name.length === 0 ? 'Not Find' : name}</small></span>
                         <span class="card-text"><small class="text-muted">${total_view}</small></span>
                         <span class="card-text"><small class="text-muted">${published_date}</small></span>
+                        <button onclick="OpenModal('${_id}')" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        Details
+                        </button>
                     </div>
                 </div>
             </div>
@@ -69,9 +70,53 @@ const creatNews = (dataArray) => {
     </div>
         `
         newsContainer.appendChild(div)
-        console.log(details.lenght);
+        console.log(data === 0);
     });
 }
+
+const OpenModal = async (data) => {
+    const titleModal = document.getElementById('staticBackdropLabel')
+    const modalBody = document.getElementById('modalBody')
+    const url = `https://openapi.programming-hero.com/api/news/${data}`
+    console.log(url);
+    try {
+        const res = await fetch(url)
+        const data = await res.json()
+        console.log(data.data[0]);
+        console.log(data.data[0].author.img);
+
+        const { title, author } = data.data[0]
+        titleModal.innerText = title
+
+        modalBody.innerHTML = `
+        <img src="${author.img}" class="img-fluid rounded-start m-3" alt="">
+        <p class="card-text">${author.name}</p>
+        `
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*          
     <div class="card mb-3" style="max-width: 100%;">
