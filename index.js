@@ -50,14 +50,14 @@ const creatNews = (dataArray) => {
         <div class="card mb-3" style="max-width: 100%;">
         <div class="row g-0">
             <div class="col-md-3">
-                <img src="${image_url}" class="img-fluid rounded-start m-3" alt="">
+                <img src="${image_url}" class="img-fluid rounded-start m-3 " alt="">
             </div>
             <div class="col-md-9 p-3">
                 <div class="card-body align-middle">
                     <h5 class="card-title">${title}</h5>
                     <p class="card-text">${details.length > 200 ? details.slice(0, 200) + '...' : details}</p>
                     <div class="d-flex justify-content-between">
-                        <span class="card-text"><small class="text-muted">${name.length === 0 ? 'Not Find' : name}</small></span>
+                        <span class="card-text"><img src="${img}" style="width: 40px;" class="img-fluid rounded-circle" alt=""><small class="text-muted ps-2">${name.length === 0 ? 'Not Find' : name}</small></span>
                         <span class="card-text"><small class="text-muted">${total_view}</small></span>
                         <span class="card-text"><small class="text-muted">${published_date}</small></span>
                         <button onclick="OpenModal('${_id}')" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
@@ -70,20 +70,19 @@ const creatNews = (dataArray) => {
     </div>
         `
         newsContainer.appendChild(div)
-        console.log(data === 0);
+
     });
 }
 
 const OpenModal = async (data) => {
     const titleModal = document.getElementById('staticBackdropLabel')
     const modalBody = document.getElementById('modalBody')
+    modalBody.innerHTML = ''
     const url = `https://openapi.programming-hero.com/api/news/${data}`
-    console.log(url);
+
     try {
         const res = await fetch(url)
         const data = await res.json()
-        console.log(data.data[0]);
-        console.log(data.data[0].author.img);
 
         const { title, author } = data.data[0]
         titleModal.innerText = title
@@ -92,6 +91,7 @@ const OpenModal = async (data) => {
         <img src="${author.img}" class="img-fluid rounded-start m-3" alt="">
         <p class="card-text">${author.name}</p>
         `
+        console.log(author.img, author.name);
     }
     catch (error) {
         console.log(error);
