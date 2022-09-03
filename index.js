@@ -21,8 +21,6 @@ const AllCategory = (Datas) => {
         <a onclick="categoryClick('${data.category_id}')" class="nav-link " href="#">${data.category_name}</a>
         `
         categories.appendChild(li)
-
-
     }
 }
 
@@ -35,6 +33,7 @@ const categoryClick = async (data = '08') => {
     try {
         const res = await fetch(url)
         const data = await res.json()
+        lodeSpinner(true)
         creatNews(data.data);
     }
     catch (error) {
@@ -51,9 +50,11 @@ const creatNews = (dataArray) => {
     if (dataArray.length === 0) {
         newsNone.classList.remove('d-none')
         itemList.innerText = `${0} News toDay`
+        lodeSpinner(false)
         return
     }
     else {
+
         newsNone.classList.add('d-none')
 
     }
@@ -87,7 +88,7 @@ const creatNews = (dataArray) => {
     </div>
         `
         newsContainer.appendChild(div)
-
+        lodeSpinner(false)
     });
 }
 
@@ -119,7 +120,15 @@ const OpenModal = async (data) => {
 
 
 
-
+const lodeSpinner = (loding) => {
+    const spinner = document.getElementById('spinner');
+    if (loding === true) {
+        spinner.classList.remove('d-none');
+    }
+    else {
+        spinner.classList.add('d-none');
+    }
+}
 
 
 
