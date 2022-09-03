@@ -18,7 +18,7 @@ const AllCategory = (Datas) => {
         const li = document.createElement('li')
         li.classList.add('nav-link')
         li.innerHTML = `
-        <a onclick="categoryClick('${data.category_id}')" class="nav-link " href="#">${data.category_name}</a>
+        <a onclick="categoryClick('${data.category_id}')" class="nav-link p-3" href="#">${data.category_name}</a>
         `
         categories.appendChild(li)
     }
@@ -68,16 +68,16 @@ const creatNews = (dataArray) => {
         <div class="card mb-3" style="max-width: 100%;">
         <div class="row g-0">
             <div class="col-md-3">
-                <img src="${image_url}" class="img-fluid rounded-start m-3 " alt="">
+                <img src="${image_url}" class="img-fluid rounded-start p-3 " alt="">
             </div>
             <div class="col-md-9 p-3">
                 <div class="card-body align-middle">
                     <h5 class="card-title">${title}</h5>
-                    <p class="card-text">${details.length > 200 ? details.slice(0, 200) + '...' : details}</p>
+                    <p class="card-text">${details.length > 200 ? details.slice(0, 250) + '...' : details}</p>
                     <div class="d-flex justify-content-between">
-                        <span class="card-text"><img src="${img}" style="width: 40px;" class="img-fluid rounded-circle" alt=""><small class="text-muted ps-2">${name.length === 0 ? 'Not Find' : name}</small></span>
-                        <span class="card-text"><small class="text-muted">${total_view}</small></span>
-                        <span class="card-text"><small class="text-muted">${published_date}</small></span>
+                        <span class="card-text"><img src="${img}" style="width: 40px;" class="img-fluid rounded-circle" alt=""><small class="text-muted ps-2">Name : ${name.length === 0 ? 'Not Find' : name}</small></span>
+                        <span class="card-text"><small class="text-muted">View : ${total_view}</small></span>
+                        <span class="card-text"><small class="text-muted">Date : ${published_date.length === 0 ? 'No Data' : published_date}</small></span>
                         <button onclick="OpenModal('${_id}')" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                         Details
                         </button>
@@ -103,12 +103,12 @@ const OpenModal = async (data) => {
     try {
         const res = await fetch(url)
         const data = await res.json()
-
         const { title, author } = data.data[0]
         titleModal.innerText = title
         modalBody.innerHTML = `
         <img src="${author.img}" class="img-fluid rounded-start m-3" alt="">
-        <p class="card-text">${author.name.length === 0 ? 'No Data' : author.name}</p>
+        <p class="card-text">Name :${author.name.length === 0 ? 'No Data' : author.name}</p>
+        <p class="card-text">Date : ${author.published_date.length === 0 ? 'No Date' : author.published_date}</p>
         `
         console.log(author.img, author.name);
     }
