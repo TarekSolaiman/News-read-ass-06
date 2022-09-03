@@ -103,10 +103,9 @@ const OpenModal = async (data) => {
 
         const { title, author } = data.data[0]
         titleModal.innerText = title
-
         modalBody.innerHTML = `
         <img src="${author.img}" class="img-fluid rounded-start m-3" alt="">
-        <p class="card-text">${author.name}</p>
+        <p class="card-text">${author.name.length === 0 ? 'No Data' : author.name}</p>
         `
         console.log(author.img, author.name);
     }
