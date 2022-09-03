@@ -46,18 +46,22 @@ const creatNews = (dataArray) => {
     const newsContainer = document.getElementById('news-container')
     newsContainer.innerHTML = ``
     const newsNone = document.getElementById('news-none')
+    const itemList = document.getElementById('item-Number')
+    itemList.innerText = `News toDay`
     if (dataArray.length === 0) {
         newsNone.classList.remove('d-none')
+        itemList.innerText = `${0} News toDay`
         return
     }
     else {
         newsNone.classList.add('d-none')
 
     }
+    const ArrayLength = dataArray.length
+    itemList.innerText = `${ArrayLength} News toDay`
     dataArray.forEach(data => {
         const { _id, author, image_url, title, details, total_view } = data;
         const { img, name, published_date } = author;
-        console.log(data);
         const div = document.createElement('div')
         div.innerHTML = `
         <div class="card mb-3" style="max-width: 100%;">
