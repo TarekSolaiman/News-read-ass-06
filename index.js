@@ -130,6 +130,28 @@ const lodeSpinner = (loding) => {
     }
 }
 
+const OpenModalQUs = () => {
+    const titleModal = document.getElementById('staticBackdropLabel')
+    titleModal.innerText = 'Question and Answer'
+    const modalBody = document.getElementById('modalBody')
+    modalBody.innerHTML = `
+    <h5>Difference between var let and const ?</h5>
+    <p>The scope of a var variable is functional scope. The scope of a let variable is block scope. The scope of a const variable is block scope. It can be updated and re-declared into the scope.</p>
+    
+    <h5>Difference between arrow function and normal function ?</h5>
+    <p> In regular function, you always have to return any value, but in Arrow function you can skip return keyword and write in single line.</p>
+
+    <h5>Difference between map and foreach ?</h5>
+    <p>The main difference between this two methods is that forEach allows you to change elements of original array and returns undefined and map does not allow you to change original array and intended for making new array based on original one.</p>
+
+    <h5>Difference between filter and find ?</h5>
+    <p>You've relearned the find array method. find returns the first matching element and filter returns an array of all.</p>
+
+    <h5>Why you use template string ?</h5>
+    <p>Template literals provide an easy way to interpolate variables and expressions into strings. The method is called string interpolation.</p>
+    
+    `
+}
 
 
 
