@@ -36,16 +36,6 @@ const categoryClick = async (data = '08') => {
         const res = await fetch(url)
         const data = await res.json()
         creatNews(data.data);
-        const newsNone = document.getElementById('news-none')
-        if (data.data.length === 0) {
-            newsNone.classList.remove('d-none')
-            return
-        }
-        else {
-            newsNone.classList.add('d-none')
-
-        }
-
     }
     catch (error) {
         console.log(error);
@@ -54,8 +44,16 @@ const categoryClick = async (data = '08') => {
 
 const creatNews = (dataArray) => {
     const newsContainer = document.getElementById('news-container')
-    const spinner = document.getElementById('spinner')
     newsContainer.innerHTML = ``
+    const newsNone = document.getElementById('news-none')
+    if (dataArray.length === 0) {
+        newsNone.classList.remove('d-none')
+        return
+    }
+    else {
+        newsNone.classList.add('d-none')
+
+    }
     dataArray.forEach(data => {
         const { _id, author, image_url, title, details, total_view } = data;
         const { img, name, published_date } = author;
