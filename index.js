@@ -22,17 +22,30 @@ const AllCategory = (Datas) => {
         `
         categories.appendChild(li)
 
+
     }
 }
 
 categories();
 
-const categoryClick = async (data) => {
+
+const categoryClick = async (data = '08') => {
     const url = `https://openapi.programming-hero.com/api/news/category/${data}`
+
     try {
         const res = await fetch(url)
         const data = await res.json()
         creatNews(data.data);
+        const newsNone = document.getElementById('news-none')
+        if (data.data.length === 0) {
+            newsNone.classList.remove('d-none')
+            return
+        }
+        else {
+            newsNone.classList.add('d-none')
+
+        }
+
     }
     catch (error) {
         console.log(error);
@@ -41,10 +54,12 @@ const categoryClick = async (data) => {
 
 const creatNews = (dataArray) => {
     const newsContainer = document.getElementById('news-container')
+    const spinner = document.getElementById('spinner')
     newsContainer.innerHTML = ``
     dataArray.forEach(data => {
         const { _id, author, image_url, title, details, total_view } = data;
         const { img, name, published_date } = author;
+        console.log(data);
         const div = document.createElement('div')
         div.innerHTML = `
         <div class="card mb-3" style="max-width: 100%;">
@@ -73,6 +88,8 @@ const creatNews = (dataArray) => {
 
     });
 }
+
+categoryClick();
 
 const OpenModal = async (data) => {
     const titleModal = document.getElementById('staticBackdropLabel')
